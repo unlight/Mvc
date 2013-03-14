@@ -3,7 +3,8 @@
     "description": "MVC service for Silex.",
     "require": {
         "iamthes/useful-functions": "dev-master",
-        "mikecao/sparrow": "*"
+        "mikecao/sparrow": "*",
+        "gabordemooij/redbean": "dev-master"
     },
     "autoload": {
     	"classmap": [
