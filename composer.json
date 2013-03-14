@@ -1,0 +1,30 @@
+{
+    "name": "iamthes/mvc-service",
+    "description": "MVC service for Silex.",
+    "require": {
+        "iamthes/useful-functions": "dev-master",
+        "mikecao/sparrow": "*"
+    },
+    "autoload": {
+    	"classmap": [
+    		""
+    	]
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "mikecao/sparrow",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/mikecao/sparrow.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "classmap": ["sparrow.php"]
+                }
+            }
+        }
+    ]
+}
