@@ -6,7 +6,7 @@ abstract class Bean extends RedBean_SimpleModel {
 
 	protected function columns() {
 		if (is_null(self::$columns)) {
-			$name = $this->getMeta('type');
+			$name = $this->bean->getMeta('type');
 			self::$columns = R::getColumns($name);
 		}
 		return self::$columns;
