@@ -22,4 +22,17 @@ abstract class Bean extends RedBean_SimpleModel {
 		return $result;
 	}
 
+	public function update() {
+		$bean = $this->bean;
+		$columns = self::columns();
+		if (!$bean->id) {
+			if (array_key_exists('date_inserted', $columns)) {
+				$this->date_inserted = R::isoDateTime();
+			}
+		}
+		if (array_key_exists('date_updated', $columns)) {
+			$this->date_updated = R::isoDateTime();
+		}
+	}
+
 }
