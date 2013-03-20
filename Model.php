@@ -90,4 +90,10 @@ class Model extends Pluggable {
 		}
 		return $sql;
 	}
+
+	public static function staticGetId($id) {
+		$model = new self();
+		$result = $model->getId($id);
+		return $result;
+	}
 }
