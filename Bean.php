@@ -2,8 +2,8 @@
 
 abstract class Bean extends RedBean_SimpleModel {
 
+	protected $validation;
 	protected static $columns;
-	protected $validaton;
 
 	public function setProperties($data) {
 		$this->columns();
@@ -30,9 +30,9 @@ abstract class Bean extends RedBean_SimpleModel {
 	public function save() {
 		$valid = true;
 		$result = false;
-		if ($this->validaton) {
+		if ($this->validation) {
 			$values = $this->bean->export();
-			$valid = $this->validaton->validate($values);
+			$valid = $this->validation->validate($values);
 		}
 		if ($valid) {
 			$result = R::store($this->bean);
@@ -60,8 +60,8 @@ abstract class Bean extends RedBean_SimpleModel {
 
 	public function validationResults() {
 		$result = array();
-		if ($this->validaton) {
-			$result = $this->validaton->result();
+		if ($this->validation) {
+			$result = $this->validation->results();
 		}
 		return $result;
 	}
