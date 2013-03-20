@@ -2,7 +2,7 @@
 
 abstract class Bean extends RedBean_SimpleModel {
 
-	protected $validation;
+	public $validation;
 	protected static $columns;
 
 	public function setProperties($data) {
