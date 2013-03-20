@@ -22,57 +22,6 @@ class Model extends Pluggable {
 		return $beans;
 	}
 
-	// Looks like these methods should be in Bean.
-
-	// public function save($values = array()) {
-	// 	setNullValues($values);
-	// 	$this->defineColumns();
-	// 	$primaryKeyValue = getValue('id', $values);
-	// 	$insert = ($primaryKeyValue === false);
-	// 	$result = false;
-	// 	if ($this->validate($values, $insert) === true) {
-	// 		$this->importValues($values);
-	// 		$this->mutator->save();
-	// 		$result = $this->bean->save(); // TODO: Check for attached model.
-	// 	}
-	// 	return $result;
-	// }
-
-	// public function defineColumns() {
-	// 	if (is_null($this->columns)) {
-	// 		$this->columns = R::getColumns($this->name);
-	// 	}
-	// 	return $this->columns;
-	// }
-
-	// public function update() {
-	// 	$this->defineColumns();
-	// 	if (array_key_exists('date_updated', $this->columns)) {
-	// 		$this->bean->date_updated = date('Y-m-d H:i:s');
-	// 	}
-	// 	if ($this->bean->getID() == 0) {
-	// 		if (array_key_exists('date_inserted', $this->columns)) {
-	// 			$this->bean->date_inserted = date('Y-m-d H:i:s');
-	// 		}
-	// 		$session = application('session.handler');
-	// 		if ($session) {
-	// 			$sessionUserId = $session->userId();
-	// 			if (array_key_exists('insert_user_id', $this->columns)) {
-	// 				$this->bean->insert_user_id = $sessionUserId;
-	// 			}
-	// 			if (array_key_exists('update_user_id', $this->columns)) {
-	// 				$this->bean->update_user_id = $sessionUserId;
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// public function validate($values, $insert = false) {
-	// 	$this->defineColumns();
-	// 	$result = $this->validation->validate($values, $insert);
-	// 	return $result;
-	// }
-
 	public function validationResults() {
 		return $this->validation->results();
 	}
