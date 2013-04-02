@@ -108,7 +108,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 		R::$writer->setUseCache(true);
 		// R::setRedBean(new RedBean_Plugin_Cache(R::$writer));
 		R::freeze(true);
-		RedBean_ModelHelper::setModelFormatter(new BeanFormatter());
+		RedBean_ModelHelper::setModelFormatter(new BeanModelFormatter());
 		// R::debug(true);
 		// R::$adapter->addEventListener('sql_exec', new QueryLogger());
 		// R::debug(true, new Logger());

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Bean extends RedBean_SimpleModel {
+abstract class BeanModel extends RedBean_SimpleModel {
 
 	protected $validation;
 	protected static $columns;
