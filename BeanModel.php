@@ -4,6 +4,7 @@ abstract class BeanModel extends RedBean_SimpleModel {
 
 	protected $validation;
 	protected static $columns;
+	protected static $tables;
 
 	public function validation() {
 		if (is_null($this->validation)) {
@@ -26,12 +27,12 @@ abstract class BeanModel extends RedBean_SimpleModel {
 	}
 
 	protected function columns() {
+		$name = $this->bean->getMeta('type');
 		// TODO: Add check for exists table (R::$redbean->tableExists())
-		if (is_null(self::$columns)) {
-			$name = $this->bean->getMeta('type');
-			self::$columns = R::getColumns($name);
+		if (!isset(self::$columns[$name])) {
+			self::$columns[$name] = R::getColumns($name);
 		}
-		return self::$columns;
+		return self::$columns[$name];
 	}
 
 	public function save() {
