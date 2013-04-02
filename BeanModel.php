@@ -55,9 +55,17 @@ abstract class BeanModel extends RedBean_SimpleModel {
 			if (array_key_exists('date_inserted', $columns)) {
 				$this->date_inserted = R::isoDateTime();
 			}
+			if (array_key_exists('insert_user_id', $columns)) {
+				$session = application('session.handler');
+				$this->insert_user_id = $session->userId();
+			}
 		}
 		if (array_key_exists('date_updated', $columns)) {
 			$this->date_updated = R::isoDateTime();
+		}
+		if (array_key_exists('update_user_id', $columns)) {
+			$session = application('session.handler');
+			$this->update_user_id = $session->userId();
 		}
 	}
 
