@@ -10,8 +10,8 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 	public $logger;
 
 	public function update(Application $app) {
-		$accessUser = $app['config']('database.structure.access.user', 'root');
-		$accessPassword = $app['config']('database.structure.access.password', rand());
+		$accessUser = $app['config']->get('database.structure.access.user', 'root');
+		$accessPassword = $app['config']->get('database.structure.access.password', rand());
 
 		$request = $app['request'];
 		$username = $request->server->get('PHP_AUTH_USER', false);
@@ -100,16 +100,15 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 	 * a service must be requested).
 	 */
 	public function boot(Application $app) {
-		if (isset($app['database']['dsn'])) {
-			$dsn = $app['database']['dsn'];
-		} else {
-			$dsn = $app['database']['engine'] . ':host=' . $app['database']['host'] . ';dbname=' . $app['database']['name'];
+		$dsn = $app['config']->get('database.dsn');
+		if (!$dsn) {
+			$dsn = $app['config']->get('database.engine') . ':host=' . $app['config']->get('database.host') . ';dbname=' . $app['config']->get('database.name');
 		}
-		$toolbox = R::setup($dsn, $app['database']['user'], $app['database']['password']);
+		$toolbox = R::setup($dsn, $app['config']->get('database.user'), $app['config']->get('database.password'));
 		R::$writer->setUseCache(true);
 		// R::setRedBean(new RedBean_Plugin_Cache(R::$writer));
 		R::freeze(true);
-		RedBean_ModelHelper::setModelFormatter(new BeanFormatter());
+		RedBean_ModelHelper::setModelFormatter(new BeanModelFormatter());
 		// R::debug(true);
 		// R::$adapter->addEventListener('sql_exec', new QueryLogger());
 		// R::debug(true, new Logger());

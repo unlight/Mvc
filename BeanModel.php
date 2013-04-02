@@ -1,9 +1,10 @@
 <?php
 
-abstract class Bean extends RedBean_SimpleModel {
+abstract class BeanModel extends RedBean_SimpleModel {
 
 	protected $validation;
 	protected static $columns;
+	protected static $tables;
 
 	public function validation() {
 		if (is_null($this->validation)) {
@@ -26,12 +27,12 @@ abstract class Bean extends RedBean_SimpleModel {
 	}
 
 	protected function columns() {
+		$name = $this->bean->getMeta('type');
 		// TODO: Add check for exists table (R::$redbean->tableExists())
-		if (is_null(self::$columns)) {
-			$name = $this->bean->getMeta('type');
-			self::$columns = R::getColumns($name);
+		if (!isset(self::$columns[$name])) {
+			self::$columns[$name] = R::getColumns($name);
 		}
-		return self::$columns;
+		return self::$columns[$name];
 	}
 
 	public function save() {
@@ -47,11 +48,6 @@ abstract class Bean extends RedBean_SimpleModel {
 		return $result;
 	}
 
-	public function delete() {
-		$result = R::trash($this->bean);
-		return $result;
-	}
-
 	public function update() {
 		$bean = $this->bean;
 		$columns = self::columns();
@@ -59,9 +55,17 @@ abstract class Bean extends RedBean_SimpleModel {
 			if (array_key_exists('date_inserted', $columns)) {
 				$this->date_inserted = R::isoDateTime();
 			}
+			if (array_key_exists('insert_user_id', $columns)) {
+				$session = application('session.handler');
+				$this->insert_user_id = $session->userId();
+			}
 		}
 		if (array_key_exists('date_updated', $columns)) {
 			$this->date_updated = R::isoDateTime();
+		}
+		if (array_key_exists('update_user_id', $columns)) {
+			$session = application('session.handler');
+			$this->update_user_id = $session->userId();
 		}
 	}
 

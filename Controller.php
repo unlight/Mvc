@@ -106,7 +106,7 @@ abstract class Controller extends Pluggable {
 
 	public function config($name, $default = false) {
 		$config = $this->app['config'];
-		$result = call_user_func($config, $name, $default);
+		$result = $config->get($name, $default);
 		return $result;
 	}
 
