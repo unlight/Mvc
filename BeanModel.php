@@ -47,11 +47,6 @@ abstract class BeanModel extends RedBean_SimpleModel {
 		return $result;
 	}
 
-	public function delete() {
-		$result = R::trash($this->bean);
-		return $result;
-	}
-
 	public function update() {
 		$bean = $this->bean;
 		$columns = self::columns();
