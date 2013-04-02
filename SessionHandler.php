@@ -19,8 +19,8 @@ class SessionHandler {
 	protected function getAuthenticator() {
 		static $cookieIdentity;
 		if ($cookieIdentity === null) {
-			$configuration = call_user_func($this->config, 'application.cookie');
-			$configuration['salt'] = call_user_func($this->config, 'application.secretkey', md5(__FILE__));
+			$configuration = $this->config->get('application.cookie', array());
+			$configuration['salt'] = $this->config->get('application.secretkey', md5(__FILE__));
 			$cookieIdentity = new CookieIdentity($configuration);
 		}
 		return $cookieIdentity;

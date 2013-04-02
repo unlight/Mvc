@@ -100,12 +100,11 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 	 * a service must be requested).
 	 */
 	public function boot(Application $app) {
-		if (isset($app['database']['dsn'])) {
-			$dsn = $app['database']['dsn'];
-		} else {
-			$dsn = $app['database']['engine'] . ':host=' . $app['database']['host'] . ';dbname=' . $app['database']['name'];
+		$dsn = $app['config']->get('database.dsn');
+		if (!$dsn) {
+			$dsn = $app['config']->get('database.engine') . ':host=' . $app['config']->get('database.host') . ';dbname=' . $app['config']->get('database.name');
 		}
-		$toolbox = R::setup($dsn, $app['database']['user'], $app['database']['password']);
+		$toolbox = R::setup($dsn, $app['config']->get('database.user'), $app['config']->get('database.password'));
 		R::$writer->setUseCache(true);
 		// R::setRedBean(new RedBean_Plugin_Cache(R::$writer));
 		R::freeze(true);
