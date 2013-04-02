@@ -105,7 +105,9 @@ abstract class Controller extends Pluggable {
 	}
 
 	public function config($name, $default = false) {
-		return $this->app['config']($name, $default);
+		$config = $this->app['config'];
+		$result = $config->get($name, $default);
+		return $result;
 	}
 
 	public function render() {

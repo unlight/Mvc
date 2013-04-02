@@ -499,6 +499,8 @@ class Validation {
 			} else {
 				$RuleName = $Rule;
 			}
+		} elseif (is_callable($Rule)) {
+			$RuleName = $Rule;
 		} elseif (is_array($Rule)) {
 			$RuleName = GetValue('Name', $Rule);
 			$Args = GetValue('Args', $Rule);
@@ -507,7 +509,7 @@ class Validation {
 		if (!isset($Args))
 			$Args = NULL;
 
-		if (function_exists($RuleName)) {
+		if (is_callable($RuleName) || function_exists($RuleName)) {
 			$Result = $RuleName($Value, $Args);
 			if ($Result === TRUE)
 				return TRUE;
@@ -573,11 +575,14 @@ class Validation {
 					if (array_key_exists($RuleName, $this->_Rules)) {
 						$Rule = $this->_Rules[$RuleName];
 						// echo '<div>FieldName: '.$FieldName.'; Rule: '.$Rule.'</div>';
-						if (substr($Rule, 0, 9) == 'function:') {
-							$Function = substr($Rule, 9);
-							if (!function_exists($Function)) {
-								// trigger_error("Specified validation function could not be found ($Function).", E_USER_ERROR);
-								trigger_error(ErrorMessage('Specified validation function could not be found.', 'Validation', 'Validate', $Function), E_USER_ERROR);
+						if (is_callable($Rule) || substr($Rule, 0, 9) == 'function:') {
+							$Function = $Rule;
+							if (is_string($Rule)) {
+								$Function = substr($Rule, 9);
+								if (!function_exists($Function)) {
+									// trigger_error("Specified validation function could not be found ($Function).", E_USER_ERROR);
+									trigger_error(ErrorMessage('Specified validation function could not be found.', 'Validation', 'Validate', $Function), E_USER_ERROR);
+								}
 							}
 							// Call the function. Core-defined validation functions can
 							// be found in ./functions.validation.php

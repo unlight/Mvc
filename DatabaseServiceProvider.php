@@ -10,8 +10,8 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 	public $logger;
 
 	public function update(Application $app) {
-		$accessUser = $app['config']('database.structure.access.user', 'root');
-		$accessPassword = $app['config']('database.structure.access.password', rand());
+		$accessUser = $app['config']->get('database.structure.access.user', 'root');
+		$accessPassword = $app['config']->get('database.structure.access.password', rand());
 
 		$request = $app['request'];
 		$username = $request->server->get('PHP_AUTH_USER', false);
