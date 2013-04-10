@@ -57,7 +57,9 @@ abstract class BeanModel extends RedBean_SimpleModel {
 			}
 			if (array_key_exists('insert_user_id', $columns)) {
 				$session = application('session.handler');
-				$this->insert_user_id = $session->userId();
+				if ($session->isValid()) {
+					$this->insert_user_id = $session->userId();	
+				}
 			}
 		}
 		if (array_key_exists('date_updated', $columns)) {
@@ -65,7 +67,9 @@ abstract class BeanModel extends RedBean_SimpleModel {
 		}
 		if (array_key_exists('update_user_id', $columns)) {
 			$session = application('session.handler');
-			$this->update_user_id = $session->userId();
+			if ($session->isValid()) {
+				$this->update_user_id = $session->userId();
+			}
 		}
 	}
 
