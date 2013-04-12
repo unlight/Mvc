@@ -14,6 +14,11 @@ abstract class BeanModel extends RedBean_SimpleModel {
 	}
 
 	public function setProperties($data) {
+		Deprecated('setProperties', 'setValues');
+		$this->setValues($data);
+	}
+
+	public function setValues($data) {
 		$this->columns();
 		$args = func_get_args();
 
@@ -38,7 +43,7 @@ abstract class BeanModel extends RedBean_SimpleModel {
 	public function save($formValues = null) {
 
 		if (is_array($formValues)) {
-			$this->setProperties($formValues);
+			$this->setValues($formValues);
 		}
 
 		$valid = true;
