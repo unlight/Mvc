@@ -35,7 +35,12 @@ abstract class BeanModel extends RedBean_SimpleModel {
 		return self::$columns[$name];
 	}
 
-	public function save() {
+	public function save($formValues = null) {
+
+		if (is_array($formValues)) {
+			$this->setProperties($formValues);
+		}
+
 		$valid = true;
 		$result = false;
 		if ($this->validation) {
