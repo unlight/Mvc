@@ -27,7 +27,7 @@ abstract class BeanModel extends RedBean_SimpleModel {
 			if (!is_array($v)) $v = (array) $v;
 			$values = array_merge($values, $v);
 		}
-		$values = array_intersect_key($values, self::$columns);
+		$values = array_intersect_key($values, $this->columns());
 		$this->bean->import($values);
 	}
 
