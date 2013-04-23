@@ -62,6 +62,8 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 		foreach (R::getWriter()->getTables() as $table) {
 			$columns = R::getColumns($table);
 			unset($columns['id']);
+			unset($columns['date_inserted']);
+			unset($columns['date_updated']);
 			$condition = '';
 			if (count($columns) == 0) {
 				continue;
