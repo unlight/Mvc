@@ -46,6 +46,10 @@ class Model extends Pluggable {
 		return $dataset;
 	}
 
+	public function beforeGet() {
+
+	}
+
 	public function get($conditions = false, $offset = null, $limit = null, $orderBy = null)  {
 		$queryCount = getValue('queryCount', $conditions, false, true);
 		$arrayResult = getValue('arrayResult', $conditions, false, true);
@@ -53,6 +57,8 @@ class Model extends Pluggable {
 		$sqlBuilder->from($this->name);
 		
 		$sqlBuilder->where($conditions);
+
+		$this->beforeGet();
 
 		if ($queryCount) {
 			$sqlBuilder->select('count(*) as count');
