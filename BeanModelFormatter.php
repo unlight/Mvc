@@ -3,6 +3,9 @@
 class BeanModelFormatter implements RedBean_IModelFormatter {
 
 	public function formatModel($model) {
-		return ucfirst($model) . 'BeanModel';
+		$parts = explode('_', $model);
+		$parts = array_map('ucfirst', $parts);
+		$name = implode('', $parts);
+		return $name . 'BeanModel';
 	}
 }

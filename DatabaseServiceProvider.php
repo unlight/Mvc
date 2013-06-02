@@ -33,7 +33,7 @@ class DatabaseServiceProvider implements ServiceProviderInterface {
 	}
 
 	public static function runUpdateConsole() {
-		if (PHP_SAPI != 'cli') throw new Exception("Error Processing Request", 1);
+		// if (PHP_SAPI != 'cli') throw new Exception("Error Processing Request", 1);
 		$app = new Silex\Application();
 		$app->register(new ConfigurationServiceProvider('settings'));
 		$databaseServiceProvider = new self();

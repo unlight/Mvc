@@ -46,12 +46,19 @@ class Model extends Pluggable {
 		return $dataset;
 	}
 
+	public function beforeGet() {
+
+	}
+
 	public function get($conditions = false, $offset = null, $limit = null, $orderBy = null)  {
 		$queryCount = getValue('queryCount', $conditions, false, true);
+		$arrayResult = getValue('arrayResult', $conditions, false, true);
 		$sqlBuilder = R::sql();
 		$sqlBuilder->from($this->name);
 		
 		$sqlBuilder->where($conditions);
+
+		$this->beforeGet();
 
 		if ($queryCount) {
 			$sqlBuilder->select('count(*) as count');
@@ -75,7 +82,12 @@ class Model extends Pluggable {
 		if ($queryCount) {
 			$result = R::getCell($sql);
 		} else {
-			$result = $sqlBuilder->dataset($sql);
+			if ($arrayResult) {
+				$result = R::getAll($sql);
+			} else {
+				$result = $sqlBuilder->dataset($sql);
+			}
+			
 		}
 		return $result;
 	}

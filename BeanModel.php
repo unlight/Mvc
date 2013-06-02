@@ -66,9 +66,12 @@ abstract class BeanModel extends RedBean_SimpleModel {
 				$this->date_inserted = R::isoDateTime();
 			}
 			if (array_key_exists('insert_user_id', $columns)) {
-				$session = application('session.handler');
-				if ($session->isValid()) {
-					$this->insert_user_id = $session->userId();	
+				$app = application();
+				if (isset($app['session.handler'])) {
+					$session = $app['session.handler'];
+					if ($session->isValid()) {
+						$this->insert_user_id = $session->userId();	
+					}
 				}
 			}
 		}
@@ -76,9 +79,12 @@ abstract class BeanModel extends RedBean_SimpleModel {
 			$this->date_updated = R::isoDateTime();
 		}
 		if (array_key_exists('update_user_id', $columns)) {
-			$session = application('session.handler');
-			if ($session->isValid()) {
-				$this->update_user_id = $session->userId();
+			$app = application();
+			if (isset($app['session.handler'])) {
+				$session = $app['session.handler'];
+				if ($session->isValid()) {
+					$this->update_user_id = $session->userId();
+				}
 			}
 		}
 	}

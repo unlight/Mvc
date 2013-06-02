@@ -197,7 +197,7 @@ abstract class Controller extends Pluggable {
 			$view = strtolower($controllerName . '/' . $view);
 		}
 		$view = suffixString($view, '.php');
-		$viewPath = 'views/' . $view;
+		$viewPath = prefixString('views/', $view);
 
 		if (!file_exists($viewPath)) {
 			trigger_error("Could not find a '$view' view for the '$controllerName' controller.", E_USER_ERROR);
