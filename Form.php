@@ -1,5 +1,7 @@
 <?php 
 
+// TODO: Keep uploaded files if POST fails.
+
 /**
  * Form validation layer.
  * Modified by S.
