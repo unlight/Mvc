@@ -12,6 +12,18 @@ class SqlBuilder extends Sparrow {
 		return self::$instance;
 	}
 
+	protected function parseCondition($field, $value = null, $join = '', $escape = true) {
+		if (is_string($value)) {
+			if (strpos($value, '@') === 0) {
+				$value = substr($value, 1);
+				$result = parent::parseCondition($field, $value, $join, false);
+				return $result;
+			}
+		}
+		$result = parent::parseCondition($field, $value, $join, $escape);
+		return $result;
+	}
+
 	public function reset() {
 		parent::reset();
 		$this->selects = array();
