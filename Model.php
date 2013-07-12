@@ -53,6 +53,7 @@ class Model extends Pluggable {
 	public function get($conditions = false, $offset = null, $limit = null, $orderBy = null)  {
 		$queryCount = getValue('queryCount', $conditions, false, true);
 		$arrayResult = getValue('arrayResult', $conditions, false, true);
+		$selectFields = getValue('selectFields', $conditions, '*', true);
 		$sqlBuilder = R::sql();
 		$sqlBuilder->from($this->name);
 		
@@ -74,7 +75,7 @@ class Model extends Pluggable {
 					$sqlBuilder->orderBy($orderBy, 'desc');
 				}
 			}
-			$sqlBuilder->select();
+			$sqlBuilder->select($selectFields);
 		}
 
 		$sql = $sqlBuilder->sql();
