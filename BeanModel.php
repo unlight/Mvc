@@ -13,11 +13,6 @@ abstract class BeanModel extends RedBean_SimpleModel {
 		return $this->validation;
 	}
 
-	public function setProperties($data) {
-		Deprecated('setProperties', 'setValues');
-		$this->setValues($data);
-	}
-
 	public function setValues($data) {
 		$this->columns();
 		$args = func_get_args();
