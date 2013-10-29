@@ -890,11 +890,17 @@ class Form {
 				}
 			}
 		} elseif (is_array($dataSet)) {
+			$valueField = ArrayValueI('ValueField', $attributes, 'value');
+			$textField = ArrayValueI('TextField', $attributes, 'text');
 			foreach($dataSet as $id => $text) {
 				if (is_array($text)) {
 					$attribs = $text;
 					$text = GetValue('Text', $attribs, '');
 					unset($attribs['Text']);
+				} else if ($text instanceof ArrayAccess) {
+					$id = $text[$valueField];
+					$text = $text[$textField];
+					$attribs = array();
 				} else {
 					$attribs = array();
 				}
