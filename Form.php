@@ -184,6 +184,49 @@ class Form {
 		return Wrap($Result, 'fieldset', GetValueR('wrap', $options));
 	}
 	
+	public function UploadBox($fieldName, $attributes = false) {
+		$attributes['data-role'] = 'uploadbox-file-input';
+		$result = "";
+		$result .= $this->TextBox($fieldName, $attributes);
+		// $result .= Wrap($name, "a", array("href" => "javascript:", 'data-role' => 'uploadbox-file-link', 'class' => 'UploadedFile'));
+		// $result .= '<a class="Button FileInput" data-role="uploadbox-file-input">'
+		// 	. $this->translate('Upload') . $this->Input($fieldName, 'file')
+		// 	. '</a>';
+		return $result;
+	}
+
+	// @Holded
+	public function UploadedFile($fieldName, $attributes = false) {
+		$result = "";
+		// $result .= $this->Label($code, $fieldName);
+		$value = ArrayValueI('value', $attributes, $this->GetValue($fieldName));
+		$file = GetValue($fieldName, $_FILES);
+		$name = GetValue('name', $file);
+		if ($file['error'] === UPLOAD_ERR_OK) {
+			$data = base64_encode(file_get_contents($file['tmp_name']));
+			$result .= $this->Hidden($fieldName.'__data', array('value' => $data));
+			$result .= $this->Hidden($fieldName.'__name', array('value' => $name));
+		} else {
+			$name = $this->GetValue($fieldName.'__name');
+			// $data = $this->GetValue($fieldName.'__data');
+			$result .= $this->Hidden($fieldName.'__data');
+			$result .= $this->Hidden($fieldName.'__name');
+		}
+		if ($name) {
+			$label = "Remove";
+			$input = $this->Input($fieldName.'__remove', 'checkbox');
+			$input = '<label class="UploadedFileRemoveLabel">' . $input . ' ' .	$this->translate($label) . '</label>';
+			$result .= $input;
+		}
+		$result .= Wrap($name, "a", array("href" => "javascript:", 'data-role' => 'uploaded-file-link', 'class' => 'UploadedFile'));
+		$result .= '<a class="Button FileInput" data-role="uploaded-file-input">'
+			. $this->translate('Upload') . $this->Input($fieldName, 'file')
+			. '</a>';
+
+		$result .= '<input type="hidden" name="UploadedFileFields[]" value="' . $fieldName . '" />';
+
+		return $result;
+	}
 	
 	/// =========================================================================
 	/// UI Components: Methods that return XHTML form elements.
@@ -1843,6 +1886,24 @@ class Form {
 					}
 				}
 			}
+
+			/*if (array_key_exists('UploadedFileFields', $collection)) {
+				foreach ($collection['UploadedFileFields'] as $field) {
+					$file = GetValue($field, $_FILES);
+					if ($file && $file['error'] === UPLOAD_ERR_OK) {
+						$this->formValues[$field] = $file['name'];
+						$this->formValues['_files'][$field] = $file;
+					} else {
+						$file = array(
+							'data' => GetValue($field.'__data', $collection),
+							'name' => GetValue($field.'__name', $collection),
+							'remove' => GetValue($field.'__remove', $collection),
+						);
+						$this->formValues['_files'][$field] = $file;
+						$this->formValues[$field] = $file['name'];
+					}
+				}
+			}*/
 		}
 		
 		// print_r($this->formValues);
