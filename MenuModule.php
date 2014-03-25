@@ -103,6 +103,10 @@ class MenuModule extends Module {
 			unset($this->items[$group]);
 		}
 	}
+
+	protected function getHighlightClass() {
+		return 'Highlight';
+	}
 	
 	public function toString($highlightRoute = '') {
 		if ($highlightRoute == '') $highlightRoute = $this->highlightRoute;
@@ -188,7 +192,7 @@ class MenuModule extends Module {
 							$currentLink = ($url == Url($highlightRoute));
 							
 							$cssClass = ArrayValue('class', $attributes, '');
-							if ($currentLink) $attributes['class'] = $cssClass . ' Highlight';
+							if ($currentLink) $attributes['class'] = $cssClass . ' ' . $this->getHighlightClass();
 							
 							$group .= '<li'.Attribute($attributes).'><a'.Attribute($anchorAttributes).' href="'.$url.'">'.$text.'</a>';
 							++$linkCount;
