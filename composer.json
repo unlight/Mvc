@@ -2,9 +2,9 @@
     "name": "iamthes/mvc-service",
     "description": "MVC service for Silex.",
     "require": {
-        "iamthes/useful-functions": "master",
-         "unlight/sparrow": "master",
-        "gabordemooij/redbean": "master"
+        "iamthes/useful-functions": "*",
+         "unlight/sparrow": "*",
+        "gabordemooij/redbean": "3.5.*"
     },
     "autoload": {
     	"classmap": [
