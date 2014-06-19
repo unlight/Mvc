@@ -235,7 +235,7 @@ abstract class Controller extends Pluggable {
 	*/
 	public function Title($title, $subtitle = null) {
 		$this->setData('title', $title);
-		if ($subtitle !== null) $this->setData('_subtitle', $subtitle);
+		if ($subtitle !== null) $this->setData('subtitle', $subtitle);
 	}
 
 	/**
